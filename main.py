@@ -28,13 +28,13 @@ def cosine(x):
 def sine(x):
     res=0
     x = x % (2 * PI)
-    if PI_OVR2 <= x < PI:
+    if PI_OVR2 <= x < PI:         #2nd Quadrant
         res = cosine(x - PI_OVR2)
-    elif PI <= x < PI_3OVR2:
+    elif PI <= x < PI_3OVR2:      #3rd Quadrant
         res = - sine(x - PI)
-    elif PI_3OVR2 <= x < 2 * PI:
+    elif PI_3OVR2 <= x < 2 * PI:  #4th Quadrant
         res = - cosine(x - PI_3OVR2)
-    else:
+    else:                         #1st Quatrant
         for i in range(0,10):
              res=res+(pow(-1,i)*pow(x,1+2*i)/factorial(1+2*i))
     return res
@@ -51,26 +51,40 @@ def cheby_zeroes(n):
     nodes=[]
     for i in range(1,n+1):
         nodes.append(cosine(PI*(2*i-1)/(2*n)))
-    return nodes
+    return np.array(nodes)
 
 
 # Press the green button in the gutter to run the script.
 
-#nodes=cheby_zeroes(4)
-#print(chebyshev(4,nodes[3]))
-#print(round(3.141516,3))
 
-print('=====================')
-print("Evaluate cos(x), sine(x) ")
-prompt =True
+
+#
+#print('=====================')
+#print("Evaluate cos(x), sine(x) ")
+# prompt =True
+# while prompt:
+#     x=input("Enter x = ")
+#     if x == '':
+#         prompt = False
+#     else:
+#         x=float(x)
+#         print( " x = ",x, ": cos(x) = ",cosine(x)," : sin(x) =",sine(x))
+#         print("sin^2 (x) + cos^2(x) = ", pow(cosine(x),2)+pow(sine(x),2))
+
+
+print("==========================")
+print("Chebyshey Discretization:")
+prompt=True
 while prompt:
-    x=input("Enter x = ")
-    if x == '':
-        prompt = False
+    nodeSize=input("Enter number of nodes = ")
+    if nodeSize== '':
+        prompt=False
     else:
-        x=float(x)
-        print( " x = ",x, ": cos(x) = ",cosine(x)," : sin(x) =",sine(x))
-        print("sin^2 (x) + cos^2(x) = ", pow(cosine(x),2)+pow(sine(x),2))
+        nodeSize=int(nodeSize)
+        nodes=cheby_zeroes(nodeSize)
+        print(chebyshev(nodeSize,nodes))
+
+
 
 #x=[-1,-2,3,4,5,6,7]
 #x=np.array(x)
