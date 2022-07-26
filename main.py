@@ -65,7 +65,8 @@ def cheby_zeroes(n):
     return np.array(nodes)
 
 def funX(x):
-    return np.array(2*pow(x,4)+1)
+#    return np.array(2*pow(x,4)+1)
+    return np.array(2*pow(x,3)-2)
 
 #print('=====================')
 #print("Evaluate cos(x), sine(x) ")
@@ -97,12 +98,19 @@ while prompt:
         for i in range(1,nodeSize):
             t = np.column_stack((t,chebyshev(i,nodes)))
         a = np.linalg.solve(t,fAtNodes)
-        ##print(a)
-
-        val = funX( 1.5 )
-        val2 = chebyshevAll(nodeSize,1.5)
-        print(np.dot(a,val2))
-        print(val)
+        print("f(x) ~ a * T(x) = a0*T0(x) + a1*T1(x) + ... + an * Tn(x)")
+        print("a = " ,a)
+        valPrompt=True
+        while valPrompt:
+            xval=input("Evaluate at x =")
+            if xval== '':
+                valPrompt=False
+            else:
+                xarg=float(xval)
+                val = funX(xarg)
+                val2 = chebyshevAll(nodeSize,xarg)
+                print(np.dot(a,val2))
+                print(val)
         #nodesVal=np.array(chebyshev(nodeSize,nodes))
         #print(np.column_stack((nodes,nodesVal,funX(nodes))))
         #a = np.array([[1,2,3],
